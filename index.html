@@ -852,6 +852,12 @@ body.gx-busy .gx-cta{display:none}
 .gx-tip{display:flex;gap:11px;align-items:flex-start;margin:0 0 16px;padding:13px 16px;border-radius:18px;background:var(--accent-soft);border:1px solid var(--accent-line);font-size:14px;line-height:1.5;color:var(--ink)}
 .gx-tip svg{flex:none;margin-top:2px;color:var(--accent-ink)}
 
+/* filtros en varias líneas en pantallas angostas, para que no se corten */
+@media (max-width:1100px){
+  .tabs-wrap{overflow:visible}
+  .tabs-wrap .tabs{display:flex;flex-wrap:wrap;white-space:normal;max-width:none;width:fit-content;border-radius:22px;row-gap:4px}
+  .tabs-wrap .tabs .tab{flex:0 0 auto}
+}
 @media (max-width:1100px){
   .gx-cta{left:10px;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 84px);padding:6px;z-index:49}
   .gx-cta .gx-pri{flex:1;height:46px;padding:0 14px;font-size:14px}
