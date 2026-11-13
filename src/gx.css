@@ -23,6 +23,8 @@ body.gx-on img,body.gx-on svg{-webkit-user-drag:none}
 .gx-pri{color:#fff;background:var(--btn);box-shadow:0 10px 24px -12px rgba(47,99,224,.95)}
 .gx-pri:hover{background:var(--btn-h)}
 .gx-pri[disabled]{opacity:.55;cursor:default;box-shadow:none}
+.gx-pri.gx-green{background:#16803C;box-shadow:0 10px 24px -12px rgba(22,128,60,.95)}
+.gx-pri.gx-green:hover{background:#126A31}
 .gx-sec{color:var(--ink);background:transparent;border-color:var(--border)}
 .gx-sec:hover{background:var(--hover)}
 .gx-quiet{height:48px;padding:0 16px;color:var(--ink-2);background:transparent;font-weight:500}

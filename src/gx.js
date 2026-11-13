@@ -12,7 +12,7 @@ var CFG = {
   // en el calendario de contact@granadosai.net. Ver CONEXION-CALENDARIO.md.
   bookingUrl: 'https://script.google.com/macros/s/AKfycbzzCWrUWBkiA9CYI0LReMorvQbUlF1FLUtNKGRnYmyiPIghAhBxA-l8GXuwqiQL6FtK/exec',
   // ID del Pixel de Meta. Vacío = no se carga.
-  pixelId: '',
+  pixelId: '852957737347193',
   // Horarios de reunión, de lunes a viernes, hora de Guatemala (minutos desde medianoche).
   slots: [480, 540, 600, 660, 720, 960, 1020],
   slotMin: 30,
@@ -69,7 +69,7 @@ function track(ev, data){ try{ if(window.fbq) window.fbq('track', ev, data || {}
 document.body.classList.add('gx-on');
 var root = document.createElement('div'); root.id = 'gx-root';
 root.innerHTML = 
-  '<div class="gx-cta" id="gx-cta"><button type="button" class="gx-btn gx-pri" data-gx="book">' + IC.cal + '<span>' + T.cta + '</span></button><button type="button" class="gx-btn gx-quiet" data-gx="info">Qué incluye</button></div>' +
+  '<div class="gx-cta" id="gx-cta"><button type="button" class="gx-btn gx-pri gx-green" data-gx="book">' + IC.cal + '<span>' + T.cta + '</span></button><button type="button" class="gx-btn gx-quiet" data-gx="info">Qué incluye</button></div>' +
   '<div id="gx-layer"></div><div id="gx-tour"></div>' +
   '<div class="gx-shield" id="gx-shield" role="status"><div><b>Demostración protegida</b><span>Toque la pantalla para seguir viendo el sistema.</span></div></div>';
 document.body.appendChild(root);
@@ -113,7 +113,7 @@ function tourRender(){
     '<div class="gx-bar"><i style="width:' + Math.round((step + 1) / n * 100) + '%"></i></div>' +
     '<h3>' + s.h + '</h3><p>' + s.p + '</p>' +
     '<div class="gx-tour-nav">' + (step > 0 ? '<button type="button" class="gx-btn gx-sec" data-gx="tour-prev">Atrás</button>' : '') +
-    (s.last ? '<button type="button" class="gx-btn gx-pri" data-gx="book">' + IC.cal + '<span>' + T.cta + '</span></button>' : '<button type="button" class="gx-btn gx-pri" data-gx="tour-next">Siguiente</button>') + '</div></div>';
+    (s.last ? '<button type="button" class="gx-btn gx-pri gx-green" data-gx="book">' + IC.cal + '<span>' + T.cta + '</span></button>' : '<button type="button" class="gx-btn gx-pri" data-gx="tour-next">Siguiente</button>') + '</div></div>';
 }
 function tourGo(i){
   step = i; var s = STEPS[i], h = typeof s.go === 'function' ? s.go() : s.go;
@@ -229,7 +229,7 @@ function info(){
     '<div><h4>WhatsApp</h4><p>' + T.whatsapp + '</p></div>' +
     '<div><h4>ChatGPT o Claude</h4><p>' + T.gpt + '</p></div>' +
     '<div><h4>Asistente de IA dentro del sistema</h4><p>' + T.ai + '</p></div></div>' +
-    '<div class="gx-row"><button type="button" class="gx-btn gx-pri" data-gx="book">' + IC.cal + '<span>' + T.cta + '</span></button></div>', true, 'Qué incluye');
+    '<div class="gx-row"><button type="button" class="gx-btn gx-pri gx-green" data-gx="book">' + IC.cal + '<span>' + T.cta + '</span></button></div>', true, 'Qué incluye');
 }
 
 /* ---------- notas dentro de las pantallas ---------- */
