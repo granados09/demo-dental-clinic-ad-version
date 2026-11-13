@@ -57,7 +57,9 @@ var T = {
   ai: 'El asistente de IA dentro del sistema es un extra opcional: Q2,000 de instalación y desde Q168 al mes, según lo que use.'
 };
 
-/* ---------- Pixel de Meta ---------- */
+/* ---------- Pixel de Meta ----------
+   La campaña usa el objetivo Ventas, que solo optimiza eventos de compra. Por eso, además de
+   Lead y Schedule, se envían: InitiateCheckout = abrió la agenda, Purchase = agendó una reunión. */
 function track(ev, data){ try{ if(window.fbq) window.fbq('track', ev, data || {}); }catch(e){} }
 (function pixel(){
   if(!CFG.pixelId) return;
@@ -155,7 +157,7 @@ function loadBusy(){
 function bookOpen(){
   var ds = dayList();
   if(!B.day || ds.indexOf(B.day) < 0) B.day = ds.filter(function(d){ return freeCount(d) > 0; })[0] || ds[0];
-  B.err = ''; bookRender(true); loadBusy(); track('Lead', {content_name:'abrir agenda'});
+  B.err = ''; bookRender(true); loadBusy(); track('Lead', {content_name:'abrir agenda'}); track('InitiateCheckout', {content_name:'abrir agenda'});
 }
 function capture(){ ['name','clinic','phone','email'].forEach(function(k){ var el = $('#gx-' + k, layer); if(el) B.form[k] = el.value; }); }
 function bookRender(first){
@@ -205,7 +207,7 @@ function bookSend(){
     .then(function(r){ return r.json(); })
     .then(function(j){
       B.sending = false;
-      if(j && j.ok){ track('Schedule', {content_name:'reunión agendada'}); bookDone(day, min, !!email); return; }
+      if(j && j.ok){ track('Schedule', {content_name:'reunión agendada'}); track('Purchase', {value:0, currency:'USD', content_name:'reunión agendada'}); bookDone(day, min, !!email); return; }
       if(j && j.code === 'taken'){ B.busyReal.push([st, st + CFG.slotMin * 60000]); B.slot = null; B.err = 'Ese horario acaba de ocuparse. Elija otro de la lista.'; }
       else B.err = 'No pudimos guardar su reunión. Inténtelo de nuevo o escríbanos a <a href="mailto:' + CFG.email + '">' + CFG.email + '</a>.';
       bookRender();
