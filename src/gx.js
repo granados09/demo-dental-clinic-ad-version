@@ -10,7 +10,7 @@
 var CFG = {
   // URL de la aplicación web de Google Apps Script que guarda las reuniones
   // en el calendario de contact@granadosai.net. Ver CONEXION-CALENDARIO.md.
-  bookingUrl: '',
+  bookingUrl: 'https://script.google.com/macros/s/AKfycbzzCWrUWBkiA9CYI0LReMorvQbUlF1FLUtNKGRnYmyiPIghAhBxA-l8GXuwqiQL6FtK/exec',
   // ID del Pixel de Meta. Vacío = no se carga.
   pixelId: '',
   // Horarios de reunión, de lunes a viernes, hora de Guatemala (minutos desde medianoche).
