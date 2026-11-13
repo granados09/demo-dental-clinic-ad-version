@@ -16,6 +16,8 @@ var SLOT_MIN = 30;
 var ALLOWED = [480, 540, 600, 660, 720, 960, 1020];   // 8, 9, 10, 11, 12, 4 y 5
 var MAX_DAYS = 40;
 var MIN_NOTICE_MIN = 60;
+// Correos que reciben el aviso de cada reunión nueva. Vacío = la cuenta dueña del script.
+var NOTIFY_EMAILS = [];
 
 function doGet(e) {
   var p = (e && e.parameter) || {};
@@ -55,10 +57,11 @@ function doPost(e) {
       start: { dateTime: start.toISOString(), timeZone: TZ },
       end: { dateTime: end.toISOString(), timeZone: TZ },
       conferenceData: { createRequest: { requestId: Utilities.getUuid(), conferenceSolutionKey: { type: 'hangoutsMeet' } } },
-      reminders: { useDefault: true }
+      reminders: { useDefault: false, overrides: [{ method: 'popup', minutes: 1440 }, { method: 'popup', minutes: 60 }, { method: 'popup', minutes: 10 }] }
     };
     if (email) resource.attendees = [{ email: email, displayName: name }];
     var ev = Calendar.Events.insert(resource, CALENDAR_ID, { conferenceDataVersion: 1, sendUpdates: email ? 'all' : 'none' });
+    try { notify(name, clinic, phone, email, start, ev); } catch (mailErr) { console.error(mailErr); }
     return out({ ok: true, meet: ev.hangoutLink || '', id: ev.id });
   } catch (err) {
     console.error(err);
@@ -75,6 +78,37 @@ function busyPeriods(from, to) {
     (r.calendars[k].busy || []).forEach(function (b) { list.push([new Date(b.start).getTime(), new Date(b.end).getTime()]); });
   });
   return list;
+}
+
+function notify(name, clinic, phone, email, start, ev) {
+  var to = NOTIFY_EMAILS.length ? NOTIFY_EMAILS.join(',') : Session.getEffectiveUser().getEmail();
+  var when = Utilities.formatDate(start, TZ, "EEEE d 'de' MMMM, h:mm a");
+  var digits = phone.replace(/\D/g, '');
+  var wa = 'https://wa.me/' + digits;
+  var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var html = '<div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.5;color:#111">' +
+    '<h2 style="margin:0 0 12px">Nueva reunión agendada desde la demo dental</h2>' +
+    '<p style="margin:0 0 4px"><b>Cuándo:</b> ' + esc(when) + ' (hora de Guatemala)</p>' +
+    '<p style="margin:0 0 4px"><b>Nombre:</b> ' + esc(name) + '</p>' +
+    '<p style="margin:0 0 4px"><b>Clínica:</b> ' + esc(clinic) + '</p>' +
+    '<p style="margin:0 0 4px"><b>WhatsApp:</b> ' + esc(phone) + ' &middot; <a href="' + wa + '">Abrir chat</a></p>' +
+    '<p style="margin:0 0 4px"><b>Correo:</b> ' + esc(email || 'no lo dio') + '</p>' +
+    (ev.hangoutLink ? '<p style="margin:0 0 4px"><b>Google Meet:</b> <a href="' + ev.hangoutLink + '">' + ev.hangoutLink + '</a></p>' : '') +
+    '<p style="margin:12px 0 0"><a href="' + ev.htmlLink + '">Ver en el calendario</a></p>' +
+    '<p style="margin:16px 0 0;padding:10px 12px;background:#f2f5fb;border-radius:8px">Pendiente: confirmar por WhatsApp hoy y personalizar la demo con el nombre y logo de la clínica antes de la reunión.</p>' +
+    '</div>';
+  MailApp.sendEmail({
+    to: to,
+    subject: 'Nueva reunión: ' + clinic + ', ' + when,
+    htmlBody: html,
+    body: 'Nueva reunión agendada. ' + when + '. ' + name + ', ' + clinic + ', WhatsApp ' + phone + ' (' + wa + ').'
+  });
+}
+
+/** Ejecute esta función una vez desde el editor para dar el permiso de enviar correos. Le llega un correo de prueba. */
+function probarCorreo() {
+  var fake = { hangoutLink: 'https://meet.google.com/prueba', htmlLink: 'https://calendar.google.com' };
+  notify('Prueba', 'Clínica de prueba', '+502 30503672', '', new Date(Date.now() + 86400000), fake);
 }
 
 function clean(v, max) { return String(v == null ? '' : v).replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, max); }

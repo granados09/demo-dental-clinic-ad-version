@@ -29,3 +29,18 @@ Suba el cambio a GitHub y Vercel publica solo.
 - Crea la reunión de 30 minutos con enlace de Google Meet.
 - Si la persona dio su correo, Google le envía la invitación.
 - La descripción del evento trae el nombre, la clínica y el WhatsApp.
+
+## Actualizar el código sin cambiar la URL
+
+1. En script.google.com abra el proyecto y reemplace todo el contenido de `Code.gs`.
+2. Guarde. Si el código nuevo usa un permiso nuevo (por ejemplo enviar correos), ejecute
+   `probarCorreo` una vez y dé el permiso.
+3. **Deploy**, luego **Manage deployments**, el lápiz de la implementación activa,
+   **Version: New version** y **Deploy**. Así la URL `/exec` sigue igual.
+   (No use "New deployment": eso crea una URL nueva.)
+
+## Avisos
+
+Cada reunión nueva envía un correo a la cuenta dueña del script (o a `NOTIFY_EMAILS`)
+con el nombre, la clínica, el WhatsApp con enlace para abrir el chat y el enlace de Meet.
+El evento trae recordatorios 1 día, 1 hora y 10 minutos antes.
