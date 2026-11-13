@@ -750,11 +750,6 @@ body.gx-on input,body.gx-on textarea,body.gx-on select{-webkit-user-select:text;
 body.gx-on img,body.gx-on svg{-webkit-user-drag:none}
 @media print{body.gx-on>*{display:none !important}body.gx-on::after{content:"Demostración de Granados AI. Esta página no se puede imprimir.";display:block;padding:40px;font:16px/1.5 sans-serif;color:#000}}
 
-/* marca de agua */
-.gx-wm{position:fixed;inset:-40%;z-index:150;pointer-events:none;transform:rotate(-24deg);opacity:.05;background-repeat:repeat;background-size:330px 150px;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='330' height='150'%3E%3Ctext x='10' y='84' font-family='Outfit,Arial,sans-serif' font-size='25' font-weight='600' fill='%23ffffff'%3EDemo Granados AI%3C/text%3E%3C/svg%3E")}
-:root[data-theme="light"] .gx-wm{opacity:.065;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='330' height='150'%3E%3Ctext x='10' y='84' font-family='Outfit,Arial,sans-serif' font-size='25' font-weight='600' fill='%23101418'%3EDemo Granados AI%3C/text%3E%3C/svg%3E")}
-
 /* cortina de protección */
 .gx-shield{position:fixed;inset:0;z-index:400;display:none;place-items:center;padding:24px;text-align:center;background:var(--bg);color:var(--ink)}
 .gx-shield.on{display:grid}
@@ -3522,7 +3517,7 @@ function track(ev, data){ try{ if(window.fbq) window.fbq('track', ev, data || {}
 /* ---------- estructura base ---------- */
 document.body.classList.add('gx-on');
 var root = document.createElement('div'); root.id = 'gx-root';
-root.innerHTML = '<div class="gx-wm" aria-hidden="true"></div>' +
+root.innerHTML = 
   '<div class="gx-cta" id="gx-cta"><button type="button" class="gx-btn gx-pri" data-gx="book">' + IC.cal + '<span>' + T.cta + '</span></button><button type="button" class="gx-btn gx-quiet" data-gx="info">Qué incluye</button></div>' +
   '<div id="gx-layer"></div><div id="gx-tour"></div>' +
   '<div class="gx-shield" id="gx-shield" role="status"><div><b>Demostración protegida</b><span>Toque la pantalla para seguir viendo el sistema.</span></div></div>';

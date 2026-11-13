@@ -11,7 +11,7 @@ el anuncio de Meta. La demo original (repositorio `demo-clinica-dental`) no se t
 - Agenda de lunes a viernes a las 8:00, 9:00, 10:00, 11:00, 12:00, 4:00 y 5:00,
   con horarios que se muestran ocupados.
 - Notas de precio: sistema a la medida, WhatsApp, ChatGPT o Claude y asistente de IA.
-- Marca de agua y bloqueos básicos contra copia.
+- Bloqueos básicos contra copia.
 - Eventos del Pixel de Meta (PageView, ViewContent, Lead, Schedule).
 
 ## Archivos

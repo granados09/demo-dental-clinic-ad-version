@@ -68,7 +68,7 @@ function track(ev, data){ try{ if(window.fbq) window.fbq('track', ev, data || {}
 /* ---------- estructura base ---------- */
 document.body.classList.add('gx-on');
 var root = document.createElement('div'); root.id = 'gx-root';
-root.innerHTML = '<div class="gx-wm" aria-hidden="true"></div>' +
+root.innerHTML = 
   '<div class="gx-cta" id="gx-cta"><button type="button" class="gx-btn gx-pri" data-gx="book">' + IC.cal + '<span>' + T.cta + '</span></button><button type="button" class="gx-btn gx-quiet" data-gx="info">Qué incluye</button></div>' +
   '<div id="gx-layer"></div><div id="gx-tour"></div>' +
   '<div class="gx-shield" id="gx-shield" role="status"><div><b>Demostración protegida</b><span>Toque la pantalla para seguir viendo el sistema.</span></div></div>';
